@@ -23,20 +23,20 @@ class ENV {
     }
 
     public function load(string $path) {
-        if (!$this->fileExists) return;
-        $fileSize = filesize($this->path);
+        if (!file_exists($path)) return;
+        $fileSize = filesize($path);
         if ($fileSize > 0) {
-            $open = fopen($this->path, 'r');
+            $open = fopen($path, 'r');
             $content = fread($open, $fileSize);
             fclose($open);
 
             foreach(explode(PHP_EOL, $content) as $line) {
                 if ($line != null && ($index = strpos($line, '='))) {
                     $key = substr($line, 0, $index);
-                    $value = substr($line, $index+1);
+                    $value = trim(substr($line, $index+1));
                     
                     if (in_array(strtolower($value), ['true', 'false'])) {
-                        $value = boolval($value);
+                        $value = strtolower($value) == 'true';
                     } else if(is_numeric($value)) {
                         if ((int)$value == $value) {
                             $value = intval($value);
