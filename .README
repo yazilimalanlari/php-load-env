@@ -1,11 +1,16 @@
-<?php
+# PHP'de Ortam Değişkenlerinin Yüklenmesi
 
+# Kullanımı
+
+```PHP
 require __DIR__ . '/src/ENV.php';
 
 $env = new ENV(__DIR__ . '/.env');
 $env->init();
+```
 
 
+```PHP
 switch (ENV::get('MODE')) {
     case "development":
         $env->load(__DIR__ . '/.development.env');
@@ -15,4 +20,5 @@ switch (ENV::get('MODE')) {
         break;
 }
 
-echo ENV::get('DB_NAME');
+echo ENV::get('DB_NAME'); // dev-db
+```
